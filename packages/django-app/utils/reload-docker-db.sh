@@ -51,10 +51,10 @@ function recreate() {
   docker-compose rm -f db
 
   # deletes postgres volume
-  docker volume rm yourproject_postgres
+  docker volume rm image_ranker_elo_postgres
 
   # recreates named volume
-  docker volume create --name=yourproject_postgres
+  docker volume create --name=image_ranker_elo_postgres
 }
 
 function migrate() {
