@@ -1,5 +1,4 @@
 # Register your models here.
-from core.models import User
 from django import forms
 from django.contrib import admin
 from django.contrib.auth import password_validation
@@ -7,6 +6,8 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.forms import UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+
+from core.models import User, Image, LabeledImage, Label
 
 
 class UserCreationForm(forms.ModelForm):
@@ -140,3 +141,39 @@ class UserAdmin(DjangoUserAdmin):
     search_fields = (
         'email',
     )
+
+
+class BaseAdminMixin(admin.ModelAdmin):
+    readonly_fields = ['created_at', 'deleted_at', 'modified_at']
+    list_display_links = ['id', 'short_uuid']
+
+
+@admin.register(Image)
+class ImageAdmin(BaseAdminMixin):
+    list_display = [
+        'id',
+        'short_uuid',
+        'filename',
+        'uri',
+        'created_at',
+    ]
+
+
+@admin.register(LabeledImage)
+class LabeledImageAdmin(BaseAdminMixin):
+    list_display = [
+        'id',
+        'short_uuid',
+        'title',
+        'created_at',
+    ]
+
+
+@admin.register(Label)
+class LabelAdmin(BaseAdminMixin):
+    list_display = [
+        'id',
+        'short_uuid',
+        'slug',
+        'created_at',
+    ]
