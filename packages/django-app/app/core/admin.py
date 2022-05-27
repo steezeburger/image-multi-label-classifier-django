@@ -171,6 +171,8 @@ class ImageAdmin(BaseAdminMixin):
         'is_active',
     )
 
+    search_fields = ('filename',)
+
     readonly_fields = ('created_at', 'modified_at', 'deleted_at',)
 
     actions = ['force_delete']
