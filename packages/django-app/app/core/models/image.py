@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.safestring import mark_safe
 
 from common.models.crud_timestamps_mixin import CRUDTimestampsMixin
 from common.models.soft_delete_timestamp_mixin import SoftDeleteTimestampMixin
@@ -33,11 +34,12 @@ class Image(UUIDModelMixin,
         max_length=1024,
         null=False,
         db_index=True,
+        unique=True,
         help_text="The filename of the image.")
 
     uri = models.TextField(
         null=False,
-        help_text="The full path of the image in the docker container.")
+        help_text="The path of the image relative to manage.py.")
 
     description = models.TextField(
         null=True,
@@ -48,9 +50,14 @@ class Image(UUIDModelMixin,
         related_name='images',
         through=LabeledImage)
 
+    @property
+    def image_tag(self):
+        element = f'<img src="/{self.uri}" width="64" height="64" />'
+        return mark_safe(element)
+
     class Meta:
         db_table = 'images'
         default_permissions = ()
-        ordering = ('-id',)
+        ordering = ('filename',)
         verbose_name = 'Image'
         verbose_name_plural = 'Images'

@@ -1,6 +1,6 @@
 # Register your models here.
 from django import forms
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth import password_validation
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.forms import UserChangeForm
@@ -153,10 +153,32 @@ class ImageAdmin(BaseAdminMixin):
     list_display = [
         'id',
         'short_uuid',
+        'is_active',
         'filename',
         'uri',
+        'image_tag',
         'created_at',
     ]
+
+    fields = (
+        'filename',
+        'uri',
+        'description',
+        'created_at',
+        'modified_at',
+        'deleted_at',
+        # 'image_tag',
+        'is_active',
+    )
+
+    readonly_fields = ('created_at', 'modified_at', 'deleted_at',)
+
+    actions = ['force_delete']
+
+    @admin.action(description='!!! FORCE DELETE SELECTED !!!')
+    def force_delete(self, request, queryset):
+        queryset.delete(force_delete=True)
+        self.message_user(request, f" Force Deleted FormTemplates!", messages.SUCCESS)
 
 
 @admin.register(LabeledImage)
@@ -164,6 +186,7 @@ class LabeledImageAdmin(BaseAdminMixin):
     list_display = [
         'id',
         'short_uuid',
+        'is_active',
         'title',
         'created_at',
     ]
@@ -174,6 +197,7 @@ class LabelAdmin(BaseAdminMixin):
     list_display = [
         'id',
         'short_uuid',
+        'is_active',
         'slug',
         'created_at',
     ]

@@ -21,6 +21,7 @@ stringcase = "==1.2.0"
 toml = "==0.10.2"
 tomli = "==1.2.2"
 Django = "==4.0"
+pillow = "*"
 
 [dev-packages]
 
