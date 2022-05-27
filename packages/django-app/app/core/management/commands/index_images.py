@@ -1,9 +1,7 @@
 import json
 import os
-import sys
 from typing import Optional
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 
@@ -13,7 +11,7 @@ from core.repositories import ImageRepository
 
 class Command(BaseCommand):
     """
-    Indexes the images in app/core/management/commands/data/images/
+    Indexes the images in media/images.
 
     Images should be .jpg
     If there is a .txt file with the same filename as the image, it will be used

@@ -1,4 +1,8 @@
 def get_file_contents(path):
+    """
+    Read file at path and return contents.
+    Tries multiple encodings.
+    """
     encodings = ['utf-8', 'windows-1250', 'windows-1252']  # add more
     file_reader = None
     file_contents = None
@@ -16,6 +20,9 @@ def get_file_contents(path):
 
 
 def write_file_contents(path, contents):
+    """
+    Write file contents at path.
+    """
     f = open(path, 'w')
     f.write(contents)
     f.close()
