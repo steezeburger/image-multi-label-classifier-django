@@ -1,0 +1,2 @@
+from core.repositories.image_repository import ImageRepository
+from core.repositories.label_repository import LabelRepository
