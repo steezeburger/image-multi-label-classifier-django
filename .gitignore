@@ -4,7 +4,7 @@
 *.pyc
 __pycache__
 db.sqlite3
-media
+
 
 # Backup files #
 *.bak
@@ -137,7 +137,4 @@ GitHub.sublime-settings
 .history
 
 
-# data for management commands
-**/management/commands/data/
-**/media/images/
 
