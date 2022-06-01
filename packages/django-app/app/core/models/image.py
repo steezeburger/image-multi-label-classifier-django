@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.safestring import mark_safe
 
@@ -52,7 +53,7 @@ class Image(UUIDModelMixin,
 
     @property
     def image_tag(self):
-        element = f'<img src="/{self.uri}" width="64" height="64" />'
+        element = f'<img src="{settings.MEDIA_URL}{self.uri}" width="64" height="64" />'
         return mark_safe(element)
 
     class Meta:
