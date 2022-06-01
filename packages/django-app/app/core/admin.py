@@ -185,10 +185,10 @@ class ImageAdmin(BaseAdminMixin):
 
 @admin.register(LabeledImage)
 class LabeledImageAdmin(BaseAdminMixin):
+    readonly_fields = ['created_at', 'modified_at']
     list_display = [
         'id',
         'short_uuid',
-        'is_active',
         'title',
         'created_at',
     ]

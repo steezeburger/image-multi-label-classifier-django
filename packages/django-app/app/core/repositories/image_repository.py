@@ -15,6 +15,10 @@ class ImageRepository(BaseRepository):
         return images
 
     @classmethod
+    def get_random(cls) -> 'Image':
+        return cls.model.objects.order_by('?').first()
+
+    @classmethod
     def create(cls, data: dict) -> 'Image':
         image = cls.model.objects.create(**data)
         return image
@@ -37,6 +41,9 @@ class ImageRepository(BaseRepository):
 
         if 'description' in data:
             image.description = data['description']
+
+        if 'labels' in data:
+            image.labels.set(data['labels'])
 
         image.save()
         return image

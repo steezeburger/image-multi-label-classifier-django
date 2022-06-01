@@ -1,0 +1,25 @@
+.navbar {
+    border-bottom: 3px solid #5755d9;
+    margin-bottom: 15px;
+}
+
+#label-images-main {
+    margin-bottom: 15px;
+}
+
+#arrows button.btn {
+    margin: 5px;
+}
+
+
+.labels-container > input {
+    margin-bottom: 5px;
+}
+
+.labels-container > .labels {
+    margin-bottom: 30px;
+}
+
+.labels-container > .labels > button {
+    margin-bottom: 5px;
+}

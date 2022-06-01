@@ -1,0 +1,2 @@
+components:
+  label_selector: "core/components/label_selector.html"

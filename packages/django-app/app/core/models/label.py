@@ -19,6 +19,9 @@ class Label(UUIDModelMixin,
         null=True,
         blank=True)
 
+    def __str__(self):
+        return self.slug
+
     class Meta:
         db_table = 'labels'
         default_permissions = ()

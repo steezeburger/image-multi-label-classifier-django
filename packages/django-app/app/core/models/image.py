@@ -8,8 +8,7 @@ from common.models.uuid_mixin import UUIDModelMixin
 
 
 class LabeledImage(UUIDModelMixin,
-                   CRUDTimestampsMixin,
-                   SoftDeleteTimestampMixin):
+                   CRUDTimestampsMixin):
     label = models.ForeignKey(
         'core.Label',
         on_delete=models.CASCADE)
@@ -52,9 +51,31 @@ class Image(UUIDModelMixin,
         through=LabeledImage)
 
     @property
-    def image_tag(self):
+    def image_tag(self) -> str:
         element = f'<img src="{settings.MEDIA_URL}{self.uri}" width="64" height="64" />'
         return mark_safe(element)
+
+    def get_previous(self) -> 'Image':
+        return Image.objects.filter(
+            pk__lt=self.pk).order_by('-pk').first()
+
+    def get_next(self) -> 'Image':
+        return Image.objects.filter(
+            pk__gt=self.pk).order_by('pk').first()
+
+    def has_label(self, slug: str) -> bool:
+        return self.labels.filter(slug=slug).exists()
+
+    def serialized(self):
+        return {
+            'filename': self.filename,
+            'uri': self.uri,
+            'description': self.description,
+            'labels': [l.slug for l in self.labels.all()],
+        }
+
+    def __str__(self):
+        return self.filename
 
     class Meta:
         db_table = 'images'

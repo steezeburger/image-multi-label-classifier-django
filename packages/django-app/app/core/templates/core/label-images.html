@@ -1,0 +1,42 @@
+{% extends 'core/home.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div id="label-images-main" class="columns">
+        <div class="column col-9">
+            <div class="columns">
+                <div class="column col-lg-auto flex-centered">
+                    <img src="{% get_media_prefix %}{{ img_uri }}" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="column col-3">
+            <div class="columns">
+                <div class="column flex-centered">
+                    {% label_selector site_url=site_url labels=labels current_image_pk=current_image_pk %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="arrows" class="columns">
+        <div class="column col-9">
+            <div class="columns">
+                <div class="column col-lg-auto flex-centered">
+                    <a href="/label-images/{{ previous_pk }}">
+                        <button class="btn">previous</button>
+                    </a>
+                    <a href="/label-images/{{ random_pk }}">
+                        <button class="btn">next (random)</button>
+                    </a>
+                    <a href="/label-images/{{ next_pk }}">
+                        <button class="btn">next</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

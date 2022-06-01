@@ -1,0 +1,88 @@
+<script>
+  // https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  document.addEventListener("DOMContentLoaded", run);
+
+  function run() {
+    let selectedLabels = new Set()
+    const initiallySelectedButtons = document.querySelectorAll('.labels > button.btn-primary')
+
+    initiallySelectedButtons.forEach(button => {
+      selectedLabels.add(button.id)
+    })
+
+
+    const labelButtons = document.querySelectorAll('.labels > button.btn')
+
+    labelButtons.forEach(button => {
+      button.addEventListener('click', event => {
+        const slug = event.target.id
+        if (selectedLabels.has(slug)) {
+          selectedLabels.delete(event.target.id)
+          button.classList.remove('btn-primary')
+        } else {
+          selectedLabels.add(event.target.id)
+          button.classList.add('btn-primary')
+        }
+      })
+    })
+
+    const saveButton = document.querySelector('.save-button-container')
+    saveButton.addEventListener('click', async event => {
+      const labelsList = [...selectedLabels]
+      const csrfToken = getCookie('csrftoken')
+      const response = await fetch(
+        '{{ api_url }}/api/images/{{ current_image_pk }}', {
+          method: 'PUT',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFTOKEN': csrfToken,
+          },
+          redirect: 'follow',
+          referrerPolicy: 'no-referrer',
+          body: JSON.stringify({
+            labels: labelsList,
+          })
+        })
+      if (response.status === 200) {
+        const data = await response.json()
+        selectedLabels = new Set(data.labels)
+      }
+    })
+
+  }
+</script>
+
+<div class="labels-container">
+    <label class="form-label" for="add-label">labels</label>
+    <input id="add-label" type="text" class="form-input" placeholder="...">
+    <div class="labels">
+        {% for label in labels %}
+            <button id="{{ label.slug }}"
+                    class="btn {% if label.is_selected %}btn-primary{% endif %}">
+                {{ label.slug }}
+            </button>
+        {% endfor %}
+    </div>
+    <div class="save-button-container">
+        <button class="btn btn-primary btn-block">save</button>
+    </div>
+</div>

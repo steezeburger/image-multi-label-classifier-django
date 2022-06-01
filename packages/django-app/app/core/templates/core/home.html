@@ -1,12 +1,30 @@
-{% extends "admin/base_site.html" %}
-{% load i18n %}
-{% block breadcrumbs %}
-    <div class="breadcrumbs">
-      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-      &rsaquo; <a href=""></a>
-    </div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load i18n %}
+    {% load slippers %}
 
-{% block content %}
-    yo
-{% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image Labeler</title>
+    <link rel="stylesheet" href="/static/css/spectre.min.css">
+    <link rel="stylesheet" href="/static/css/spectre-exp.min.css">
+    <link rel="stylesheet" href="/static/css/spectre-icons.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+<div class="container">
+    <header class="navbar">
+        <section class="navbar-section">
+            <a href="/label-images" class="navbar-brand mr-2">Label Images</a>
+            <a href="/labels" class="btn btn-link">Labels</a>
+        </section>
+    </header>
+
+    {% block content %}{% endblock %}
+
+</div>
+</body>
+</html>
