@@ -40,8 +40,14 @@
       }
     })
 
+
     const addLabelButton = document.querySelector('#add-label-btn')
     const addLabelInput = document.querySelector('#add-label-input')
+    window.addEventListener('keyup', event => {
+      if (event.key === 'a') {
+        addLabelInput.focus()
+      }
+    })
     addLabelInput.addEventListener('keydown', event => {
       if (event.key === 'Enter') {
         addLabelButton.click()

@@ -52,7 +52,15 @@
                     </a>
                 </div>
             </div>
+            <div class="columns">
+                <div class="column col-4 col-mx-auto">
+                    <progress class="progress"
+                              value="{{ labeled_images_count }}"
+                              max="{{ total_images_count }}"></progress>
+                </div>
+            </div>
         </div>
+
     </div>
 
 {% endblock %}

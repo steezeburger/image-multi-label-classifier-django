@@ -29,6 +29,9 @@ class LabelImagesView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['api_url'] = settings.SITE_URL
 
+        context['total_images_count'] = ImageRepository.get_by_filter().count() * .1
+        context['labeled_images_count'] = ImageRepository.get_by_filter({'labels__isnull': False}).count()
+
         pk = kwargs.get('pk', None)
         if pk:
             image = ImageRepository.get(pk=pk)
