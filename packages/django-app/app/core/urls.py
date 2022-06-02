@@ -1,6 +1,6 @@
 from django.urls import path
 
-from core.api_controllers import images_controller
+from core.api_controllers import images_controller, labels_controller
 from core.views import (
     HomeView,
     # LabelView,
@@ -23,5 +23,11 @@ urlpatterns = [
          LabelImagesView.as_view(),
          name='label-images'),
 
-    path('api/images/<int:id>', images_controller, name='images'),
+    path('api/images/<int:pk>',
+         images_controller,
+         name='images'),
+
+    path('api/labels/',
+         labels_controller,
+         name='labels'),
 ]

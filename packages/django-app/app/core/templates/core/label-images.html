@@ -3,6 +3,22 @@
 
 {% block content %}
 
+    <script>
+      document.addEventListener("DOMContentLoaded", run);
+
+      function run() {
+        // key listeners for keyboard shortcuts
+        window.addEventListener('keydown', event => {
+          if (event.key === 'ArrowLeft') {
+            document.querySelector('#anchor-previous').click()
+          }
+          if (event.key === 'ArrowRight') {
+            document.querySelector('#anchor-next').click()
+          }
+        })
+      }
+    </script>
+
     <div id="label-images-main" class="columns">
         <div class="column col-9">
             <div class="columns">
@@ -25,13 +41,13 @@
         <div class="column col-9">
             <div class="columns">
                 <div class="column col-lg-auto flex-centered">
-                    <a href="/label-images/{{ previous_pk }}">
+                    <a id="anchor-previous" href="/label-images/{{ previous_pk }}">
                         <button class="btn">previous</button>
                     </a>
-                    <a href="/label-images/{{ random_pk }}">
+                    <a id="anchor-next-random" href="/label-images/{{ random_pk }}">
                         <button class="btn">next (random)</button>
                     </a>
-                    <a href="/label-images/{{ next_pk }}">
+                    <a id="anchor-next" href="/label-images/{{ next_pk }}">
                         <button class="btn">next</button>
                     </a>
                 </div>

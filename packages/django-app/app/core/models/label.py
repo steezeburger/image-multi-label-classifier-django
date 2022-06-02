@@ -1,13 +1,11 @@
 from django.db import models
 
 from common.models.crud_timestamps_mixin import CRUDTimestampsMixin
-from common.models.soft_delete_timestamp_mixin import SoftDeleteTimestampMixin
 from common.models.uuid_mixin import UUIDModelMixin
 
 
 class Label(UUIDModelMixin,
-            CRUDTimestampsMixin,
-            SoftDeleteTimestampMixin):
+            CRUDTimestampsMixin):
     slug = models.CharField(
         max_length=1024,
         null=False,
@@ -18,6 +16,12 @@ class Label(UUIDModelMixin,
     description = models.TextField(
         null=True,
         blank=True)
+
+    def serialized(self):
+        return {
+            'slug': self.slug,
+            'description': self.description,
+        }
 
     def __str__(self):
         return self.slug

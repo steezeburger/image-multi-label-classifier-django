@@ -23,3 +23,7 @@
 .labels-container > .labels > button {
     margin-bottom: 5px;
 }
+
+.labels-container > .add-labels-group {
+    margin-bottom: 15px;
+}

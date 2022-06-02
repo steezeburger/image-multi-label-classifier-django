@@ -144,7 +144,7 @@ class UserAdmin(DjangoUserAdmin):
 
 
 class BaseAdminMixin(admin.ModelAdmin):
-    readonly_fields = ['created_at', 'deleted_at', 'modified_at']
+    readonly_fields = ['created_at', 'modified_at']
     list_display_links = ['id', 'short_uuid']
 
 
@@ -199,7 +199,6 @@ class LabelAdmin(BaseAdminMixin):
     list_display = [
         'id',
         'short_uuid',
-        'is_active',
         'slug',
         'created_at',
     ]
