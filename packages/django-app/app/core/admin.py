@@ -172,6 +172,7 @@ class ImageAdmin(BaseAdminMixin):
     )
 
     search_fields = ('filename',)
+    list_filter = ('labels__slug',)
 
     readonly_fields = ('created_at', 'modified_at', 'deleted_at',)
 
@@ -196,6 +197,7 @@ class LabeledImageAdmin(BaseAdminMixin):
 
 @admin.register(Label)
 class LabelAdmin(BaseAdminMixin):
+    search_fields = ('slug',)
     list_display = [
         'id',
         'short_uuid',
