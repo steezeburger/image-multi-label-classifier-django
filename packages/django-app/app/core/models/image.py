@@ -66,7 +66,7 @@ class Image(UUIDModelMixin,
     def has_label(self, slug: str) -> bool:
         return self.labels.filter(slug=slug).exists()
 
-    def serialized(self):
+    def serialized(self) -> dict:
         return {
             'filename': self.filename,
             'uri': self.uri,
@@ -74,7 +74,27 @@ class Image(UUIDModelMixin,
             'labels': [l.slug for l in self.labels.all()],
         }
 
-    def __str__(self):
+    def as_csv_row_w_labels(self, all_slugs: list) -> list:
+        """
+        Returns a list like [filename, 0, 1, ...]
+
+        The first column is the filename.
+
+        For each subsequent column,
+        the value will be 0 if the image does not
+        contain the label described by the column header,
+        or 1 if the image does contain the label.
+        """
+        slugs_for_image = self.labels.values_list('slug', flat=True)
+
+        result = [self.filename]
+        for slug in all_slugs:
+            # write a 1 or 0 depending on if the image has the label
+            result.append(int(slug in slugs_for_image))
+
+        return result
+
+    def __str__(self) -> str:
         return self.filename
 
     class Meta:
