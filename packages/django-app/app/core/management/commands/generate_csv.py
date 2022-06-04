@@ -1,6 +1,7 @@
 import csv
 
 from django.core.management.base import BaseCommand
+from tqdm import tqdm
 
 from core.repositories import LabelRepository, ImageRepository
 
@@ -53,7 +54,7 @@ class Command(BaseCommand):
             writer.writerow(headers)
 
         # write a line for each labeled image
-        for image in images:
+        for image in tqdm(images):
             row = image.as_csv_row_w_labels(slugs)
             if dry_run:
                 self.stdout.write(str(row))

@@ -4,6 +4,7 @@ from typing import Optional
 
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
+from tqdm import tqdm
 
 from core.management.helpers import get_file_contents, write_file_contents
 from core.repositories import ImageRepository
@@ -57,10 +58,7 @@ class Command(BaseCommand):
         self.stdout.write('Begin indexing images...')
 
         try:
-            for filename in os.listdir(self.images_dir_path):
-                if report_dict['images_processed'] % 10 == 0:
-                    self.stdout.write(f"processed {report_dict['images_processed']} images...")
-
+            for filename in tqdm(os.listdir(self.images_dir_path)):
                 if filename.endswith('.txt'):
                     continue
 

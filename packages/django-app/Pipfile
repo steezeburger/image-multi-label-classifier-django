@@ -23,6 +23,11 @@ tomli = "==1.2.2"
 Django = "==4.0"
 pillow = "*"
 slippers = "*"
+keras = "*"
+numpy = "*"
+pandas = "*"
+sklearn = "*"
+tqdm = "*"
 
 [dev-packages]
 
