@@ -3,6 +3,8 @@
 
 # media files location
 app/media/
+app/media/images/*
+app/media/training_data/*
 
 # static files location
 app/static/

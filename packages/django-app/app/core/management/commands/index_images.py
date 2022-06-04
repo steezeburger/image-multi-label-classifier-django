@@ -18,7 +18,7 @@ class Command(BaseCommand):
       for a description.
     """
 
-    images_dir_path: str = f'media/images'
+    images_dir_path: str = 'media/images'
 
     def get_uri_for_filename(self, filename: str) -> str:
         uri = f"{self.images_dir_path}/{filename}"
