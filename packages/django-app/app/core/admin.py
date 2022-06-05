@@ -150,6 +150,15 @@ class BaseAdminMixin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(BaseAdminMixin):
+    class LabelsInline(admin.TabularInline):
+        model = Image.labels.through
+        verbose_name = 'Label'
+        verbose_name_plural = 'Labels'
+        extra = 0
+        ordering = ['label__slug']
+
+    inlines = [LabelsInline, ]
+
     list_display = [
         'id',
         'short_uuid',
@@ -186,10 +195,15 @@ class ImageAdmin(BaseAdminMixin):
 
 @admin.register(LabeledImage)
 class LabeledImageAdmin(BaseAdminMixin):
+    search_fields = ('label__slug', 'image__filename')
+
     readonly_fields = ['created_at', 'modified_at']
     list_display = [
         'id',
         'short_uuid',
+        'image_tag',
+        'slug',
+        'filename',
         'title',
         'created_at',
     ]
@@ -197,6 +211,13 @@ class LabeledImageAdmin(BaseAdminMixin):
 
 @admin.register(Label)
 class LabelAdmin(BaseAdminMixin):
+    class ImagesInline(admin.TabularInline):
+        model = LabeledImage
+        verbose_name = 'Labeled Image'
+        verbose_name_plural = 'Labeled Images'
+        extra = 0
+        ordering = ['label__slug']
+
     search_fields = ('slug',)
     list_display = [
         'id',
@@ -204,3 +225,5 @@ class LabelAdmin(BaseAdminMixin):
         'slug',
         'created_at',
     ]
+
+    inlines = [ImagesInline, ]

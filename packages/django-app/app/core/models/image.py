@@ -11,15 +11,29 @@ class LabeledImage(UUIDModelMixin,
                    CRUDTimestampsMixin):
     label = models.ForeignKey(
         'core.Label',
+        related_name='labeled_images',
         on_delete=models.CASCADE)
 
     image = models.ForeignKey(
         'core.Image',
+        related_name='labeled_images',
         on_delete=models.CASCADE)
 
     @property
-    def title(self):
+    def filename(self) -> str:
+        return self.image.filename
+
+    @property
+    def title(self) -> str:
         return f'{self.label.slug}: {self.image.filename}'
+
+    @property
+    def image_tag(self) -> str:
+        return self.image.image_tag
+
+    @property
+    def slug(self) -> str:
+        return self.label.slug
 
     class Meta:
         db_table = 'labeled_images'
