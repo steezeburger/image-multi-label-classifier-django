@@ -1,4 +1,7 @@
 from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
 
 from core.repositories import LabelRepository, ImageRepository
@@ -25,6 +28,16 @@ class HomeView(TemplateView):
 class LabelImagesView(TemplateView):
     template_name = 'core/label-images.html'
 
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get('pk', None)
+        if not pk:
+            redirect_to_pk = ImageRepository.get_by_filter().first().pk
+            return HttpResponseRedirect(
+                reverse_lazy('label-images-w-pk',
+                             kwargs={'pk': redirect_to_pk}))
+
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['api_url'] = settings.SITE_URL
@@ -33,37 +46,32 @@ class LabelImagesView(TemplateView):
         context['labeled_images_count'] = ImageRepository.get_by_filter({'labels__isnull': False}).count()
 
         pk = kwargs.get('pk', None)
-        if pk:
-            image = ImageRepository.get(pk=pk)
+        image = ImageRepository.get(pk=pk)
 
-            # TODO - pretty errors
-            if not image:
-                raise NotImplementedError
+        # TODO - pretty errors
+        if not image:
+            raise NotImplementedError
 
-            context['img_uri'] = image.uri
-            context['current_image_pk'] = image.pk
+        context['img_uri'] = image.uri
+        context['current_image_pk'] = image.pk
 
-            selected_labels = image.labels.all()
-            selected_labels_slugs = [l.slug for l in selected_labels]
-            context['labels'] = [
-                {
-                    "slug": label.slug,
-                    "is_selected": label.slug in selected_labels_slugs,
-                } for label in LabelRepository.get_by_filter()
-            ]
+        selected_labels = image.labels.all()
+        selected_labels_slugs = [l.slug for l in selected_labels]
+        context['labels'] = [
+            {
+                "slug": label.slug,
+                "is_selected": label.slug in selected_labels_slugs,
+            } for label in LabelRepository.get_by_filter()
+        ]
 
-            context['random_pk'] = ImageRepository.get_random().pk
+        context['random_pk'] = ImageRepository.get_random().pk
 
-            previous_image = image.get_previous()
-            if previous_image:
-                context['previous_pk'] = previous_image.pk
+        previous_image = image.get_previous()
+        if previous_image:
+            context['previous_pk'] = previous_image.pk
 
-            next_image = image.get_next()
-            if next_image:
-                context['next_pk'] = next_image.pk
-
-        else:
-            # TODO - handle no pk. show random?
-            pass
+        next_image = image.get_next()
+        if next_image:
+            context['next_pk'] = next_image.pk
 
         return context
