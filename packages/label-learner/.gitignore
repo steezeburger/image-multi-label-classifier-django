@@ -1,0 +1,7 @@
+# miniforge installer
+Miniforge3-MacOSX-arm64.sh
+# miniforge3 files
+miniforge3/
+
+# this file will contain the serialized model
+pickled_model.pkl
