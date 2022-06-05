@@ -1,12 +1,12 @@
 import csv
 
-from django.core.management.base import BaseCommand
 from tqdm import tqdm
 
+from common.management.commands.base_management_command import BaseManagementCommand
 from core.repositories import LabelRepository, ImageRepository
 
 
-class Command(BaseCommand):
+class Command(BaseManagementCommand):
     """
     Generates a CSV of image filename and labels,
     to be consumed by our keras script.
@@ -24,13 +24,6 @@ class Command(BaseCommand):
 
     # this is the directory where we will store the csv
     output_dir_path: str = 'media/training_data'
-
-    def add_arguments(self, parser):
-        parser.add_argument(
-            '--dry_run',
-            help='Run script with out saving changes to database.',
-            action='store_true'
-        )
 
     def handle(self, *args, **options):
         dry_run = options['dry_run']

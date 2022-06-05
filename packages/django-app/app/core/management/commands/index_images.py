@@ -2,15 +2,15 @@ import json
 import os
 from typing import Optional
 
-from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 from tqdm import tqdm
 
+from common.management.commands.base_management_command import BaseManagementCommand
 from core.management.helpers import get_file_contents, write_file_contents
 from core.repositories import ImageRepository
 
 
-class Command(BaseCommand):
+class Command(BaseManagementCommand):
     """
     Indexes the images in media/images.
 

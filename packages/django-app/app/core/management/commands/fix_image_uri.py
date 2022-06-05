@@ -1,20 +1,12 @@
-from django.core.management.base import BaseCommand
-
+from common.management.commands.base_management_command import BaseManagementCommand
 from core.models import Image
 
 
-class Command(BaseCommand):
+class Command(BaseManagementCommand):
     """
     Removes "media/" part from Image.uri values.
     I needed to fix this after properly configuring MEDIA_URL.
     """
-
-    def add_arguments(self, parser):
-        parser.add_argument(
-            '--dry_run',
-            help='Run script with out saving changes to database.',
-            action='store_true'
-        )
 
     def handle(self, *args, **options):
         dry_run = options['dry_run']
