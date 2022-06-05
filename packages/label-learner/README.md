@@ -23,7 +23,7 @@ $ ./setup-mac-local.sh
 After running the setup script, you can now call `train_model.py` with Python from the venv
 
 ```shell
-$ ./miniforge3/envs/leabel_learner_venv/bin/python train_model.py
+$ ./miniforge3/envs/label_learner_venv/bin/python train_model.py
 ```
 
 ## Workflows
@@ -36,7 +36,7 @@ You must first activate the `base` Conda venv, and then activate the `label_lear
 
 ```shell
 $ source ./miniforge3/bin/activate
-# now in  "base" conda venv
+# now in "base" conda venv
 (base) $ conda activate label_learner_venv
 # now in label_learner_env
 (label_learner_env) $ which python
@@ -44,7 +44,7 @@ $ source ./miniforge3/bin/activate
 
 ### Deactivating the Conda venv
 
-To deactivate a conda venv, you must use `conda deactivate`
+To deactivate a Conda venv, you must use `conda deactivate`
 
 ```shell
 (label_learner_venv) $ conda deactivate
