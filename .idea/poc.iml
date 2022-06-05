@@ -16,6 +16,8 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/packages/django-app/app" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/packages/django-app/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/label-learner/miniforge3" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/django-app/app/static" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (image-ranker-elo-django)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

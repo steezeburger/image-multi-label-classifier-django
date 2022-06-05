@@ -8,6 +8,3 @@ app/media/training_data/*
 
 # static files location
 app/static/
-
-# pyenv
-.python-version
