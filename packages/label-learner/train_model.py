@@ -66,7 +66,10 @@ def train_model():
     model.add(Dropout(0.5))
     model.add(Dense(128, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(88, activation='sigmoid'))
+    # FIXME - figure out why this number has to be the same as number of labels
+    #  and if the above values make any sense
+    num_labels = df.shape[1] - 1
+    model.add(Dense(num_labels, activation='sigmoid'))
 
     # Do not use softmax for multilabel classification
     # Softmax is useful for mutually exclusive classes, either cat or dog but not both.
