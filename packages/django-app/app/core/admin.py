@@ -217,6 +217,7 @@ class LabelAdmin(BaseAdminMixin):
         verbose_name_plural = 'Labeled Images'
         extra = 0
         ordering = ['label__slug']
+        readonly_fields = ('image_tag',)
 
     search_fields = ('slug',)
     list_display = [

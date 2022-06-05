@@ -66,7 +66,10 @@ class Image(UUIDModelMixin,
 
     @property
     def image_tag(self) -> str:
-        element = f'<img src="{settings.MEDIA_URL}{self.uri}" width="64" height="64" />'
+        element = f'''
+        <a href="/label-images/{self.pk}" target="_blank">
+            <img src="{settings.MEDIA_URL}{self.uri}" width="64" height="64" />
+        </a>'''
         return mark_safe(element)
 
     def get_previous(self) -> 'Image':
